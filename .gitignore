@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.env
+.venv/
+.mypy_cache/
+coverage/
+reports/
+logs/*.parquet

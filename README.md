@@ -27,12 +27,12 @@ Teams are stitching together OpenRouter/Together, self-hosted LLMs, and bespoke 
 ## Getting started
 
 ```bash
-pip install -r requirements.txt  # upcoming
-cp config.example.yaml config.yaml
-python cli.py plan --config config.yaml
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+mops report --log-dir logs --window 24h  # uses sample data
 ```
 
-(Placeholder commands until the first CLI drop lands.)
+(CLI currently supports `report` + `check`; more subcommands coming next.)
 
 ## Roadmap snapshot
 
@@ -41,4 +41,4 @@ python cli.py plan --config config.yaml
 - [ ] Ship guardrail hooks (PII scrub, jailbreak classifier)
 - [ ] Publish reference dashboards + Grafana export
 
-See `docs/roadmap.md` for more detail.
+See `docs/roadmap.md` and `docs/rfcs/0001-mvp.md` for more detail.
