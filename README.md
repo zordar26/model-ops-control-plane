@@ -40,5 +40,6 @@ mops report --log-dir logs --window 24h  # uses sample data
 - [ ] Build log ingestor + cost tracker (OpenRouter + Anthropic to start)
 - [ ] Ship guardrail hooks (PII scrub, jailbreak classifier)
 - [ ] Publish reference dashboards + Grafana export
+- [ ] Launch GitHub Pages microsite + lightweight web UI for telemetry/approvals
 
 See `docs/roadmap.md` and `docs/rfcs/0001-mvp.md` for more detail.
