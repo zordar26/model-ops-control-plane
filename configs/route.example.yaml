@@ -1,0 +1,24 @@
+version: "1"
+environment: dev
+comment: "Example routing config for Model Ops Control Plane"
+routes:
+  - name: primary-openrouter
+    provider: openrouter
+    model: openrouter/anthropic/claude-3-sonnet
+    weight: 0.7
+    max_latency_ms: 3000
+    fallbacks:
+      - backup-azure
+  - name: backup-azure
+    provider: azure-openai
+    model: gpt-4o-mini
+    weight: 0.3
+    cost_cap_usd: 50
+    fallbacks: []
+guardrails:
+  - name: pii-scan
+    type: pii_scan
+    threshold: 0.0
+  - name: jailbreak
+    type: jailbreak_scan
+    threshold: 0.05
