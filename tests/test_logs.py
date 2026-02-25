@@ -13,7 +13,12 @@ def test_aggregate_sample_logs(tmp_path: Path) -> None:
     report = aggregate(entries)
 
     assert report.total_requests == 3
+    assert report.total_prompt_tokens == 2600
+    assert report.total_completion_tokens == 750
     assert len(report.metrics) == 2
     providers = {(m.provider, m.model): m for m in report.metrics}
-    assert providers[("openrouter", "openrouter/anthropic/claude-3-sonnet")].requests == 2
-    assert providers[("azure-openai", "gpt-4o-mini")]._errors == 1
+    openrouter_metric = providers[("openrouter", "openrouter/anthropic/claude-3-sonnet")]
+    assert openrouter_metric.requests == 2
+    assert openrouter_metric.success_count == 2
+    azure_metric = providers[("azure-openai", "gpt-4o-mini")]
+    assert azure_metric.error_count == 1

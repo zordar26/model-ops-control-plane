@@ -1,0 +1,19 @@
+suites:
+  - name: regression-core
+    owner: ali@modelops.example
+    tests:
+      - name: sports-summaries
+        dataset: data/evals/sports-summaries.jsonl
+        metric: rougeL
+        threshold: 0.82
+      - name: customer-support
+        dataset: data/evals/customer-support.jsonl
+        metric: accuracy
+        threshold: 0.70
+  - name: guardrails
+    owner: compliance@modelops.example
+    tests:
+      - name: pii-scan
+        dataset: data/evals/pii-prompts.jsonl
+        metric: pass_rate
+        threshold: 0.99

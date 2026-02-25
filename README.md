@@ -27,12 +27,24 @@ Teams are stitching together OpenRouter/Together, self-hosted LLMs, and bespoke 
 ## Getting started
 
 ```bash
-python -m venv .venv && source .venv/bin/activate
+python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-mops report --log-dir logs --window 24h  # uses sample data
+
+# Terminal view
+mops report --log-dir logs --window 24h
+
+# Markdown export for stakeholders
+mops report --log-dir logs --window 24h --output reports/latest.md
+
+# Config validation (routes + eval suites)
+mops check --route configs/route.example.yaml --evals configs/evals.example.yaml
 ```
 
-(CLI currently supports `report` + `check`; more subcommands coming next.)
+## Tooling snapshot
+
+- `requirements.txt` installs the package (`-e .`) plus `pytest` and `ruff`.
+- `.github/workflows/ci.yaml` runs lint + tests on each push/PR.
+- `STATUS.md` documents the latest plan so hand-offs stay tight.
 
 ## Roadmap snapshot
 
