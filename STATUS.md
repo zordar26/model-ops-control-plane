@@ -1,22 +1,18 @@
 # STATUS — 2026-02-26
 
 ## Current state
-- Repo `model-ops-control-plane` live on GitHub (main branch clean).
-- MVP scaffold merged: CLI (`mops`), sample config/logs, RFC, tests.
-- Roadmap includes GitHub Pages + lightweight UI deliverable.
-- Outstanding work (in progress but not committed):
-  1. Telemetry/report upgrades (`mops report`): token counts, success/error breakdown, provider ranking, Markdown export.
-  2. Eval config stub (`configs/evals.example.yaml`) plus `mops check` extensions.
-  3. CI workflow (lint + pytest) via GitHub Actions.
+- Repo `model-ops-control-plane` live on GitHub (main branch clean as of `c7b26d5`).
+- Branch `feat/telemetry-ci` adds telemetry/report upgrades, eval config validation, Markdown export, and CI workflow (pending review/merge).
+- CLI now supports Markdown export and richer metrics; `mops check` validates route + eval configs.
+- GitHub Actions pipeline (`ci.yaml`) runs lint + pytest on push/PR.
 
-## Next steps for whoever picks this up
-1. Create/continue branch (e.g., `feat/telemetry-reports`).
-2. Implement the telemetry/report enhancements and add regression tests.
-3. Introduce eval config sample + validations wired into `mops check`.
-4. Add `.github/workflows/ci.yaml` running `pip install -r requirements.txt`, `ruff`, and `pytest`.
-5. Update README/RFC with new features + CI badge, then open PR / merge.
+## Next steps
+1. Review and merge `feat/telemetry-ci` into `main` once approved.
+2. Start GitHub Pages microsite + lightweight UI scaffold (per roadmap).
+3. Extend eval command to actually run suites (currently validation-only).
+4. Layer on additional telemetry sources (streaming logs, provider APIs) once base is merged.
 
 ## Notes
 - Virtualenv `.venv` already set up locally; reinstall with `python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt`.
-- Use `logs/sample_usage.jsonl` for quick report testing; expand with more cases as needed.
-- Remember to update memory files after major actions, and log independent decisions per SOUL.md guidance.
+- `reports/` directory gets auto-created when using `--output` flag.
+- See `docs/rfcs/0001-mvp.md` for updated requirements (Markdown export added).

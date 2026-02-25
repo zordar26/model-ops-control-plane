@@ -2,12 +2,11 @@
 
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Dict, Iterable, List
-
-import json
 
 
 @dataclass
@@ -32,8 +31,14 @@ class AggregatedMetric:
     total_cost: float = 0.0
     p95_latency_ms: float = 0.0
     error_rate: float = 0.0
+    error_count: int = 0
+    success_count: int = 0
     _latencies: List[float] = field(default_factory=list, repr=False)
     _errors: int = 0
+
+    @property
+    def total_tokens(self) -> int:
+        return self.total_prompt_tokens + self.total_completion_tokens
 
     def finalize(self) -> None:
         if self._latencies:
@@ -42,6 +47,8 @@ class AggregatedMetric:
             self.p95_latency_ms = sorted_lat[index]
         if self.requests:
             self.error_rate = self._errors / self.requests
+            self.error_count = self._errors
+            self.success_count = self.requests - self._errors
 
 
 @dataclass
@@ -49,6 +56,12 @@ class AggregatedReport:
     metrics: List[AggregatedMetric]
     total_cost: float
     total_requests: int
+    total_prompt_tokens: int
+    total_completion_tokens: int
+
+    @property
+    def total_tokens(self) -> int:
+        return self.total_prompt_tokens + self.total_completion_tokens
 
 
 def parse_jsonl_logs(log_dir: Path, since: datetime | None = None) -> List[LogEntry]:
@@ -81,6 +94,8 @@ def aggregate(entries: Iterable[LogEntry]) -> AggregatedReport:
     metrics: Dict[tuple[str, str], AggregatedMetric] = {}
     total_cost = 0.0
     total_requests = 0
+    total_prompt_tokens = 0
+    total_completion_tokens = 0
 
     for entry in entries:
         key = (entry.provider, entry.model)
@@ -96,11 +111,19 @@ def aggregate(entries: Iterable[LogEntry]) -> AggregatedReport:
             metric._errors += 1
         total_cost += entry.cost_usd
         total_requests += 1
+        total_prompt_tokens += entry.prompt_tokens
+        total_completion_tokens += entry.completion_tokens
 
     for metric in metrics.values():
         metric.finalize()
 
-    return AggregatedReport(metrics=list(metrics.values()), total_cost=total_cost, total_requests=total_requests)
+    return AggregatedReport(
+        metrics=list(metrics.values()),
+        total_cost=total_cost,
+        total_requests=total_requests,
+        total_prompt_tokens=total_prompt_tokens,
+        total_completion_tokens=total_completion_tokens,
+    )
 
 
 def parse_window(window: str) -> timedelta:
