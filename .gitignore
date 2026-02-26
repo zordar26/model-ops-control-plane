@@ -6,3 +6,5 @@ __pycache__/
 coverage/
 reports/
 logs/*.parquet
+site/node_modules/
+site/dist/

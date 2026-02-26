@@ -1,0 +1,30 @@
+{
+  "generatedAt": "2026-02-25T19:16:44Z",
+  "summary": {
+    "requests": 3,
+    "tokens": 3350,
+    "promptTokens": 2600,
+    "completionTokens": 750,
+    "cost": 2.48
+  },
+  "providers": [
+    {
+      "provider": "openrouter",
+      "model": "openrouter/anthropic/claude-3-sonnet",
+      "requests": 2,
+      "success": 2,
+      "errors": 0,
+      "p95LatencyMs": 1800,
+      "cost": 1.68
+    },
+    {
+      "provider": "azure-openai",
+      "model": "gpt-4o-mini",
+      "requests": 1,
+      "success": 0,
+      "errors": 1,
+      "p95LatencyMs": 2500,
+      "cost": 0.8
+    }
+  ]
+}

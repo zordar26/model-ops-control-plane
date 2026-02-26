@@ -1,18 +1,21 @@
 # STATUS — 2026-02-26
 
 ## Current state
-- Repo `model-ops-control-plane` live on GitHub (main branch clean as of `c7b26d5`).
-- Branch `feat/telemetry-ci` adds telemetry/report upgrades, eval config validation, Markdown export, and CI workflow (pending review/merge).
-- CLI now supports Markdown export and richer metrics; `mops check` validates route + eval configs.
-- GitHub Actions pipeline (`ci.yaml`) runs lint + pytest on push/PR.
+- Repo `model-ops-control-plane` live on GitHub (`main@12b102f`).
+- CLI: telemetry upgrades + eval validation + CI ✅
+- Public site: branch `feat/ui-pages` adds Vite-based landing page, telemetry snapshot, and Pages deploy workflow (awaiting merge / first deploy).
+
+## Completed this round
+1. `site/` scaffolded with Vite (`npm install`, `npm run build`).
+2. Landing page mirrors product pillars + roadmap + telemetry table backed by `src/data/sample-report.json`.
+3. `.github/workflows/pages.yml` builds and deploys the site via GitHub Pages.
+4. README now links to the live demo; STATUS updated.
 
 ## Next steps
-1. Review and merge `feat/telemetry-ci` into `main` once approved.
-2. Start GitHub Pages microsite + lightweight UI scaffold (per roadmap).
-3. Extend eval command to actually run suites (currently validation-only).
-4. Layer on additional telemetry sources (streaming logs, provider APIs) once base is merged.
+- Merge `feat/ui-pages`, ensure Pages deploy succeeds, and verify public URL.
+- Replace sample telemetry JSON with automated export from `mops report` (cron or workflow artifact).
+- Begin wiring eval execution + guardrails as the next CLI milestone.
 
 ## Notes
-- Virtualenv `.venv` already set up locally; reinstall with `python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt`.
-- `reports/` directory gets auto-created when using `--output` flag.
-- See `docs/rfcs/0001-mvp.md` for updated requirements (Markdown export added).
+- Run the site locally with `cd site && npm install && npm run dev`.
+- GitHub Pages workflow expects repository Pages settings to use `GitHub Actions`. After first successful run, the URL will resolve at `https://zordar26.github.io/model-ops-control-plane/`.
