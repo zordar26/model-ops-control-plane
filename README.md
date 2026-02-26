@@ -40,10 +40,27 @@ mops report --log-dir logs --window 24h --output reports/latest.md
 mops check --route configs/route.example.yaml --evals configs/evals.example.yaml
 ```
 
+## Live demo
+
+The GitHub Pages microsite mirrors the product pillars and latest telemetry snapshot:
+
+👉 <https://zordar26.github.io/model-ops-control-plane/>
+
+To develop locally:
+
+```bash
+cd site
+npm install
+npm run dev
+```
+
+CI builds the site and deploys to Pages on every push to `main` via `.github/workflows/pages.yml`.
+
 ## Tooling snapshot
 
 - `requirements.txt` installs the package (`-e .`) plus `pytest` and `ruff`.
 - `.github/workflows/ci.yaml` runs lint + tests on each push/PR.
+- `.github/workflows/pages.yml` builds + deploys the public site from `site/`.
 - `STATUS.md` documents the latest plan so hand-offs stay tight.
 
 ## Roadmap snapshot
